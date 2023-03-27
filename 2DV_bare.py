@@ -53,7 +53,7 @@ lapinv = 1.0/np.where(lap == 0., np.inf, lap)
 lp = 8.0
 
 # Co-efficient of kinematic viscosity 
-nu = 1e-4
+nu = 1e-32
 k = (kx**2 + ky**2)**0.5
 xivis =  nu *(lap**lp) ## The viscous term 
 
