@@ -153,10 +153,10 @@ def evolve_and_save(f,t,x0):
         # print(np.round(t[i],2),ifft2(x_old).min().get(),end= '\r')
         
         
-        k1[:] = f(ti,x_old,i)
-        k2[:] = f(ti + h/2, x_old + h/2*k1,i)
-        k3[:] = f(ti + h/2, x_old + h/2*k2,i)
-        k4[:] = f(ti + h, x_old + h*k3,i)
+        k1[:] = adv(ti,x_old,i)
+        k2[:] = adv(ti + h/2, x_old + h/2*k1,i)
+        k3[:] = adv(ti + h/2, x_old + h/2*k2,i)
+        k4[:] = adv(ti + h, x_old + h*k3,i)
         
         # print(f'x[{i}] = ',x[i])
         # print("k1 = ",k1)
