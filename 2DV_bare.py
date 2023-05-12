@@ -26,7 +26,7 @@ curr_path = pathlib.Path(__file__).parent
 ## ------------ Grid and related operators ------------
 ## Forming the 2D grid (position space)
 Lx, Ly = (2*np.pi),(2*np.pi) #Length of the grid
-Nx, Ny = 128*3,128*3 #Number of points
+Nx, Ny = 1024,1024 #Number of points
 X,Y = np.linspace(0,Lx,Nx,endpoint= False), np.linspace(0,Ly,Ny,endpoint= False)
 x,y = np.meshgrid(X,Y,indexing="ij")
 
