@@ -3,7 +3,7 @@ import cupy.fft as fft
 from time import time
 # import h5py
 import pathlib
-
+curr_path = pathlib.Path(__file__).parent
 ## --------------- Details of the code ---------------
     # This program solves the 2D vorticity equation without forcing using RK4 and FFT. 
     # The 2D vorticity equation is given by d_t \xi  + u.\grad \xi= \nu \laplacian \xi.
@@ -26,7 +26,7 @@ import pathlib
 ## ------------ Grid and related operators ------------
 ## Forming the 2D grid (position space)
 Lx, Ly = (2*np.pi),(2*np.pi) #Length of the grid
-Nx, Ny = 1024*3,1024*3 #Number of points
+Nx, Ny = 128*3,128*3 #Number of points
 X,Y = np.linspace(0,Lx,Nx,endpoint= False), np.linspace(0,Ly,Ny,endpoint= False)
 x,y = np.meshgrid(X,Y,indexing="ij")
 
@@ -68,7 +68,7 @@ kinit= 100 ## Intial energy will be distributed among these regions equally in a
 ## ---------------- Time things -----------------
 ## Time-step
 dt = 0.005
-T = 150
+T = 10
 t = np.arange(0,dt + T,dt)
 
 st = int(1/dt) ## Interval of saving the data
@@ -172,9 +172,8 @@ def evolve_and_save(f,t,x0):
             ## Saving the vorticity contour
             # np.save(f"data/vorticity {np.round(t[i]/t[-1]*100,2)}%",ifft2(x_old))
             # vorticity[i//st,:] = ifft2(x_old).get()
-            new_dir_name = f"data/Re_{np.round(1/nu,2)},dt_{dt}/time_{t[i]}"
-            new_dir = pathlib.Path('/home/rajarshi.chattopadhyay/fluid/caustics', new_dir_name)
-            new_dir.mkdir(parents=True, exist_ok=True)
+            savePath = curr_path/f"data/Re_{np.round(1/nu,2)},dt_{dt}/time_{t[i]}"
+            savePath.mkdir(parents=True, exist_ok=True)
             np.save(f"data/Re_{np.round(1/nu,2)},dt_{dt}/time_{t[i]}/w", x_old)
             
             
@@ -185,9 +184,8 @@ def evolve_and_save(f,t,x0):
         
     ## Saving the last vorticity        
     # vorticity[i//st+1,:] = ifft2(x_old).get()
-    new_dir_name = f"data/Re_{np.round(1/nu,2)},dt_{dt}/time_{t[i+1]}"
-    new_dir = pathlib.Path('/home/rajarshi.chattopadhyay/fluid/caustics', new_dir_name)
-    new_dir.mkdir(parents=True, exist_ok=True)
+    savePath = curr_path/f"data/Re_{np.round(1/nu,2)},dt_{dt}/time_{t[i+1]}"
+    savePath.mkdir(parents=True, exist_ok=True)
     np.save(f"data/Re_{np.round(1/nu,2)},dt_{dt}/time_{t[i+1]}/w", x_old)
     return etot
 ## ---------------------------------------------------------   
