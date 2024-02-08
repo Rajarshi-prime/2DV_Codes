@@ -1,0 +1,5 @@
+*.npy
+Plots/*
+128^2.out
+data/N_128_Re_1e+28,dt_0.05/shear_128.npz
+data/N_128_Re_1e+28,dt_0.05/vel_128.npz
